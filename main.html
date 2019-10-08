@@ -1,0 +1,95 @@
+<html> 
+ <head>
+    <title></title> 
+</head>
+ <body>
+    <p align="center"> 
+      <canvas id="mycanvas"></canvas> 
+    </p>
+ </body> 
+ <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script>
+ <script>
+var sketchProc = function(processingInstance) {
+with (processingInstance) {
+//START
+size(400, 400); 
+frameRate(120);
+
+noStroke();
+var Square = function() {
+    this.x = 5;
+    this.y = 5;
+    this.counter = 1;
+    this.dir = 1;
+    this.draw = function() {
+        rect(this.x, this.y, 20, 20);
+    };
+    this.move = function(){
+        this.counter++;
+        if(this.counter >= 69){
+            this.changeDir();
+            this.counter = 0;
+        }
+        if(this.dir === 1){
+            if(this.x > 380){
+                this.changeDir();
+                return;
+            }
+            this.x++;
+            
+        }
+        if(this.dir === 2){
+            if(this.x < 1){
+                this.changeDir();
+                return;
+            }
+            this.x--;
+        }
+        if(this.dir === 3){
+            if(this.y > 380){
+                this.changeDir();
+                return;
+            }
+            this.y++;
+        }
+        if(this.dir === 4){
+            if(this.y < 1){
+                this.changeDir();
+                return;
+            }
+            this.y--;
+        }
+    
+    
+    };
+    
+    this.changeDir = function(){
+        this.dir = floor(random(1,5));
+    };
+};
+
+
+var squares = [];
+var num_squares = 1;
+
+for (var i = 0; i < num_squares; i++) {
+    squares.push(new Square());
+}
+
+draw = function() {
+    background(110, 80, 110);
+    for (var i = 0; i < num_squares; i++) {
+        squares[i].move();
+        squares[i].draw();
+    }
+};
+
+//END
+}
+};
+
+var canvas = document.getElementById("mycanvas"); 
+var processingInstance = new Processing(canvas, sketchProc); 
+ </script>
+
+</html>
